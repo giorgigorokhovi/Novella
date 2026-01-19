@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novella</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header id="header">
+        <div class="logo">Novel<span>la</span></div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#explore-section">Explore</a></li>
+                <li><a href="#register-section" class="nav-btn">Sign Up</a></li>
+            </ul>
+            <div class="burger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <section id="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Escape Into <br><span>New Worlds</span></h1>
+            <p>Discover thousands of webnovels, fiction, and stories for free.</p>
+            <button class="btn main-btn" onclick="window.location.href='#explore-section'">Start Reading <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </section>
+
+    <section id="explore-section">
+        <div class="section-title">
+            <h2>Library Collection</h2>
+            <div class="underline"></div>
+        </div>
+        
+        <div class="category-wrapper">
+            <h3 class="category-title">
+                <i class="fas fa-book"></i> Classic Novels 
+                <span class="genre-def">— Timeless masterpieces that shaped history</span>
+            </h3>
+            <div class="marquee-container">
+                <div class="marquee-track" id="track-novels"></div>
+            </div>
+        </div>
+
+        <div class="category-wrapper">
+            <h3 class="category-title">
+                <i class="fas fa-rocket"></i> Sci-Fi 
+                <span class="genre-def">— Future technology, space, and the unknown</span>
+            </h3>
+            <div class="marquee-container reverse">
+                <div class="marquee-track" id="track-scifi"></div>
+            </div>
+        </div>
+
+        <div class="category-wrapper">
+            <h3 class="category-title">
+                <i class="fas fa-user-secret"></i> Mystery & Thriller 
+                <span class="genre-def">— Suspense, secrets, and solving crimes</span>
+            </h3>
+            <div class="marquee-container">
+                <div class="marquee-track" id="track-mystery"></div>
+            </div>
+        </div>
+
+        <div class="category-wrapper">
+            <h3 class="category-title">
+                <i class="fas fa-globe"></i> Webnovels 
+                <span class="genre-def">— Modern serialized stories from the internet</span>
+            </h3>
+            <div class="marquee-container reverse">
+                <div class="marquee-track" id="track-webnovels"></div>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="register-section">
+        <div class="form-container">
+            <h2>Create Account</h2>
+            <p>Join the community of readers</p>
+            <form id="signup-form">
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="text" id="email" placeholder="hello@example.com">
+                    <small class="error-msg"></small>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" placeholder="Min 6 chars">
+                        <i class="fas fa-eye" id="togglePassword"></i>
+                    </div>
+                    <small class="error-msg"></small>
+                </div>
+                <button type="submit" class="btn submit-btn">Get Started</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Novella. Final Project.</p>
+        </div>
+        <button id="scrollToTopBtn"><i class="fas fa-chevron-up"></i></button>
+    </footer>
+
+    <div id="cookie-banner" class="cookie-banner hidden">
+        <div class="cookie-content">
+            <i class="fas fa-cookie-bite"></i>
+            <p>We use cookies to ensure the best reading experience.</p>
+        </div>
+        <button id="acceptCookie" class="btn cookie-btn">Accept</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
