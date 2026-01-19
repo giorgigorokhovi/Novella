@@ -2,7 +2,6 @@ const burger = document.querySelector('.burger');
 const nav = document.querySelector('.nav-links');
 const navLinks = document.querySelectorAll('.nav-links li');
 
-
 burger.addEventListener('click', () => {
     nav.classList.toggle('nav-active');
     const icon = burger.querySelector('i');
@@ -23,34 +22,27 @@ navLinks.forEach(link => {
     });
 });
 
-//API 
-
 async function fetchBooks() {
     try {
-       
         const response = await fetch('books.json');
-        
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
         const data = await response.json();
         
-       
-        populateTrack(document.getElementById('track-novels'), data.novels);
-        populateTrack(document.getElementById('track-scifi'), data.scifi);
-        populateTrack(document.getElementById('track-mystery'), data.mystery);
-        populateTrack(document.getElementById('track-webnovels'), data.webnovels);
-        
-       
-        setupDragScroll();
+        if(document.getElementById('track-novels')) {
+            populateTrack(document.getElementById('track-novels'), data.novels);
+            populateTrack(document.getElementById('track-scifi'), data.scifi);
+            populateTrack(document.getElementById('track-mystery'), data.mystery);
+            populateTrack(document.getElementById('track-webnovels'), data.webnovels);
+            setupDragScroll();
+        }
 
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 }
 
-// HTML books
 function populateTrack(trackElement, books) {
     trackElement.innerHTML = '';
     let cardsHtml = '';
@@ -70,7 +62,6 @@ function populateTrack(trackElement, books) {
         `;
     });
 
-    
     trackElement.innerHTML = cardsHtml + cardsHtml + cardsHtml; 
 }
 
@@ -81,9 +72,7 @@ function truncateText(text, limit) {
     return text;
 }
 
-//call API
 fetchBooks();
-
 
 function setupDragScroll() {
     const containers = document.querySelectorAll('.marquee-container');
@@ -125,6 +114,80 @@ function setupDragScroll() {
     });
 }
 
+function updateNavCounter() {
+    const list = JSON.parse(localStorage.getItem('wantToReadList')) || [];
+    const counter = document.getElementById('read-counter');
+    
+    if (counter) {
+        if (list.length > 0) {
+            counter.innerText = list.length;
+            counter.style.display = 'inline-block';
+        } else {
+            counter.style.display = 'none';
+        }
+    }
+}
+updateNavCounter();
+
+const modal = document.getElementById('readModal');
+const link = document.getElementById('wantToReadLink');
+const closeBtn = document.getElementById('closeModal');
+const listContainer = document.getElementById('readListContainer');
+
+if(link) {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        openReadModal();
+    });
+}
+
+if(closeBtn) {
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+}
+
+if(modal) {
+    window.addEventListener('click', (e) => {
+        if (e.target == modal) {
+            modal.style.display = 'none';
+        }
+    });
+}
+
+function openReadModal() {
+    const list = JSON.parse(localStorage.getItem('wantToReadList')) || [];
+    if(modal) modal.style.display = 'flex';
+    
+    if(listContainer) {
+        if(list.length === 0) {
+            listContainer.innerHTML = '<p style="text-align:center; color:#888;">No books added yet.</p>';
+            return;
+        }
+
+        let html = '';
+        list.forEach((book, index) => {
+            html += `
+                <div class="read-item">
+                    <img src="${book.image}" alt="cover">
+                    <div>
+                        <h4>${book.title}</h4>
+                        <span class="btn-remove" onclick="removeBook(${index})">Remove</span>
+                    </div>
+                </div>
+            `;
+        });
+        listContainer.innerHTML = html;
+    }
+}
+
+window.removeBook = function(index) {
+    let list = JSON.parse(localStorage.getItem('wantToReadList')) || [];
+    list.splice(index, 1);
+    localStorage.setItem('wantToReadList', JSON.stringify(list));
+    updateNavCounter();
+    openReadModal();
+};
 
 const form = document.getElementById('signup-form');
 const emailInput = document.getElementById('email');
@@ -145,7 +208,6 @@ if(form) {
         e.preventDefault();
         let isValid = true;
         
-       
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(emailInput.value.trim())) {
             setError(emailInput, 'Enter a valid email address');
@@ -215,7 +277,6 @@ if(scrollBtn) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 }
-
 
 if (cookieBanner && !localStorage.getItem('cookiesAccepted')) {
     setTimeout(() => { cookieBanner.classList.remove('hidden'); }, 2000);
